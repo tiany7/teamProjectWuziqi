@@ -1,6 +1,4 @@
-# QtWuziqi
-Qt 写的五子棋小游戏，带AI和双人对战，现已添加网络功能
-# ScreenShot
-![](https://github.com/tashaxing/QtWuziqi/raw/master/pic/wuziqi.gif)<br/>
-# BlogAddress
-http://blog.csdn.net/u012234115/article/details/53871009
+﻿一个在qt框架下开发的五子棋小程序
+该工程系转载“http://blog.csdn.net/u012234115/article/details/53871009
+”用户，如有侵权请联系删除
+
