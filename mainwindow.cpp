@@ -8,13 +8,17 @@
 #include <QAction>
 #include <QDebug>
 #include <math.h>
+#include <QPalette>
 #include "mainwindow.h"
-
+#include <QPixmap>
+#include <QPixmapCache>
+#include <Qimage>
+#include <QFileDialog>
 // -------全局遍历-------//
 #define CHESS_ONE_SOUND ":/res/sound/chessone.wav"
 #define WIN_SOUND ":/res/sound/win.wav"
 #define LOSE_SOUND ":/res/sound/lose.wav"
-
+#define BACK_GOUND_PIC ":/res/picture/background1.JPG"
 const int kBoardMargin = 30; // 棋盘边缘空隙
 const int kRadius = 15; // 棋子半径
 const int kMarkSize = 6; // 落子标记边长
@@ -45,13 +49,25 @@ MainWindow::MainWindow(QWidget *parent)
     QAction *actionPVE = new QAction("Person VS Computer", this);
     connect(actionPVE, SIGNAL(triggered()), this, SLOT(initPVEGame()));
     gameMenu->addAction(actionPVE);
-
     QAction *actionPVPOL = new QAction("Person VS Person Online", this);
     connect(actionPVPOL, SIGNAL(triggered()), this, SLOT(initPVPOLGame()));
     gameMenu->addAction(actionPVPOL);
-
+    //QAction *actionPVF = new QAction("Person VS Zhouxiang", this);
+    //connect(actionPVF, SIGNAL(triggered()), this, SLOT(initPVPOLGame()));
+    //gameMenu->addAction(actionPVF);
     // 开始游戏
+    QMenu *secondMenu = menuBar()->addMenu("新奇有趣");
+    QAction * getBoard = secondMenu->addAction("自定义背景");
+    connect(getBoard,&QAction::triggered,this, [=](){
+        QString path = QFileDialog::getOpenFileName(this, "打开路径", "C:\\Users\\tiany\\Documents\\teamProjectWuziqi");
+        QPalette background = this->palette();
+        QImage loaded_image(path);
+        QImage fitted_image = loaded_image.scaled(width(),height(),Qt::IgnoreAspectRatio);
+        background.setBrush(QPalette::Window, QBrush(fitted_image));
+        this->setPalette(background);
+    } );
     initGame();
+
 }
 
 MainWindow::~MainWindow()
@@ -77,7 +93,17 @@ void MainWindow::initPVPGame()
     game->startGame(game_type);
     update();
 }
+void MainWindow::changeBack(){
+    QString file_name;
+    //QAction *getBoard = gameMenu
+    QPixmap pixmap(BACK_GOUND_PIC);
+      QPalette palette;
+      palette.setBrush(QPalette::Background, QPixmap(pixmap));
 
+    //setWindowFlags(Qt::WindowMinMaxButtonsHint);//窗口的最大小化
+      setAutoFillBackground(true);
+      this->setPalette(palette);
+}
 void MainWindow::initPVEGame()
 {
     game_type = BOT;
@@ -92,7 +118,7 @@ void MainWindow::initPVPOLGame()
     tcpSocket = new QTcpSocket(this);
 
     //连接服务器
-    port = 12345;
+    port = 3306;
     serverIP = new QHostAddress();
     QString ip = "127.0.0.1";
     serverIP->setAddress(ip);
@@ -112,10 +138,14 @@ void MainWindow::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     // 绘制棋盘
+    //QPainter painter(this);
+     //painter.drawPixmap(0,0,width(),height(),QPixmap(BACK_GOUND_PIC));
+    //update();
+
     painter.setRenderHint(QPainter::Antialiasing, true); // 抗锯齿
-//    QPen pen; // 调整线条宽度
-//    pen.setWidth(2);
-//    painter.setPen(pen);
+    //QPen pen; // 调整线条宽度
+    //pen.setWidth(2);
+   //painter.setPen(pen);
     for (int i = 0; i < kBoardSizeNum + 1; i++)
     {
         painter.drawLine(kBoardMargin + kBlockSize * i, kBoardMargin, kBoardMargin + kBlockSize * i, size().height() - kBoardMargin);

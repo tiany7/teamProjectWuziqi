@@ -11,8 +11,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = QtWuziqi
 TEMPLATE = app
-
-
 SOURCES += main.cpp\
         mainwindow.cpp \
     GameModel.cpp
@@ -22,3 +20,6 @@ HEADERS  += mainwindow.h \
 
 RESOURCES += \
     resource.qrc
+
+FORMS += \
+    mainwindow.ui

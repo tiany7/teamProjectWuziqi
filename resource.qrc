@@ -3,5 +3,6 @@
         <file>res/sound/chessone.wav</file>
         <file>res/sound/lose.wav</file>
         <file>res/sound/win.wav</file>
+        <file>res/picture/background1.JPG</file>
     </qresource>
 </RCC>

@@ -38,7 +38,7 @@ private slots:
     void chessOneByAI(); // AI下棋
 
     void chessOneByPersonOnline(); // 通过网络与好友下棋
-
+    void changeBack();
     void initPVPGame();
     void initPVEGame();
 

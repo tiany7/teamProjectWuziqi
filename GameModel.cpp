@@ -46,7 +46,6 @@ void GameModel::updateGameMap(int row, int col)
         gameMapVec[row][col] = 1;
     else
         gameMapVec[row][col] = -1;
-
     // 换手
     playerFlag = !playerFlag;
 }
@@ -60,11 +59,9 @@ void GameModel::actionByAI(int &clickRow, int &clickCol)
 {
     // 计算评分
     calculateScore();
-
     // 从评分中找出最大分数的位置
     int maxScore = 0;
     std::vector<std::pair<int, int>> maxPoints;
-
     for (int row = 1; row < kBoardSizeNum; row++)
         for (int col = 1; col < kBoardSizeNum; col++)
         {
@@ -184,7 +181,7 @@ void GameModel::calculateScore()
                             {
                                 // 量变空位不一样，优先级不一样
                                 if (emptyNum == 1)
-                                    scoreMapVec[row][col] += 60;
+                                    scoreMapVec[row][col] += 60;//110
                                 else if (emptyNum == 2)
                                     scoreMapVec[row][col] += 110;
                             }
