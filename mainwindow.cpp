@@ -14,6 +14,11 @@
 #include <QPixmapCache>
 #include <Qimage>
 #include <QFileDialog>
+#include <QSqlDatabase>
+#include <QDebug>
+#include <QMessageBox>
+#include <QSqlError>
+#include <QSqlQuery>
 // -------全局遍历-------//
 #define CHESS_ONE_SOUND ":/res/sound/chessone.wav"
 #define WIN_SOUND ":/res/sound/win.wav"
@@ -59,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
     QMenu *secondMenu = menuBar()->addMenu("新奇有趣");
     QAction * getBoard = secondMenu->addAction("自定义背景");
     connect(getBoard,&QAction::triggered,this, [=](){
-        QString path = QFileDialog::getOpenFileName(this, "打开路径", "C:\\Users\\tiany\\Documents\\teamProjectWuziqi");
+        QString path = QFileDialog::getOpenFileName(this, "打开路径", "C:\\Users\\tiany\\Documents\\teamProjectWuziqi","*.mp4 *.jpg *.png *.jpeg");
         QPalette background = this->palette();
         QImage loaded_image(path);
         QImage fitted_image = loaded_image.scaled(width(),height(),Qt::IgnoreAspectRatio);
