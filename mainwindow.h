@@ -5,7 +5,7 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 #include "GameModel.h"
-
+#include "dialog.h"
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

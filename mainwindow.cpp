@@ -19,6 +19,8 @@
 #include <QMessageBox>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <dialog.h>
+#include "menulist.h"
 // -------全局遍历-------//
 #define CHESS_ONE_SOUND ":/res/sound/chessone.wav"
 #define WIN_SOUND ":/res/sound/win.wav"
@@ -57,11 +59,9 @@ MainWindow::MainWindow(QWidget *parent)
     QAction *actionPVPOL = new QAction("Person VS Person Online", this);
     connect(actionPVPOL, SIGNAL(triggered()), this, SLOT(initPVPOLGame()));
     gameMenu->addAction(actionPVPOL);
-    //QAction *actionPVF = new QAction("Person VS Zhouxiang", this);
-    //connect(actionPVF, SIGNAL(triggered()), this, SLOT(initPVPOLGame()));
-    //gameMenu->addAction(actionPVF);
+
     // 开始游戏
-    QMenu *secondMenu = menuBar()->addMenu("新奇有趣");
+    QMenu *secondMenu = menuBar()->addMenu("改变玩法");
     QAction * getBoard = secondMenu->addAction("自定义背景");
     connect(getBoard,&QAction::triggered,this, [=](){
         QString path = QFileDialog::getOpenFileName(this, "打开路径", "C:\\Users\\tiany\\Documents\\teamProjectWuziqi","*.mp4 *.jpg *.png *.jpeg");
@@ -71,6 +71,10 @@ MainWindow::MainWindow(QWidget *parent)
         background.setBrush(QPalette::Window, QBrush(fitted_image));
         this->setPalette(background);
     } );
+    QAction *actionPVF = new QAction("Person VS Zhouxiang", this);
+    connect(actionPVF, SIGNAL(triggered()), this, SLOT(changeBack()));
+    secondMenu->addAction(actionPVF);
+
     initGame();
 
 }
@@ -99,15 +103,9 @@ void MainWindow::initPVPGame()
     update();
 }
 void MainWindow::changeBack(){
-    QString file_name;
-    //QAction *getBoard = gameMenu
-    QPixmap pixmap(BACK_GOUND_PIC);
-      QPalette palette;
-      palette.setBrush(QPalette::Background, QPixmap(pixmap));
-
-    //setWindowFlags(Qt::WindowMinMaxButtonsHint);//窗口的最大小化
-      setAutoFillBackground(true);
-      this->setPalette(palette);
+    Dialog database;
+    database.openDatabase();
+    database.createTable("users");
 }
 void MainWindow::initPVEGame()
 {
