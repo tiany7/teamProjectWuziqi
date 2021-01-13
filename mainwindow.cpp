@@ -21,6 +21,7 @@
 #include <QSqlQuery>
 #include <dialog.h>
 #include "menulist.h"
+#include "purchasemenu.h"
 // -------全局遍历-------//
 #define CHESS_ONE_SOUND ":/res/sound/chessone.wav"
 #define WIN_SOUND ":/res/sound/win.wav"
@@ -42,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
     // 设置棋盘大小
     setFixedSize(kBoardMargin * 2 + kBlockSize * kBoardSizeNum, kBoardMargin * 2 + kBlockSize * kBoardSizeNum);
 //    setStyleSheet("background-color:yellow;");
-
+    setWindowTitle("五子棋");
     // 开启鼠标hover功能，这两句一般要设置window的
     setMouseTracking(true);
 //    centralWidget()->setMouseTracking(true);
@@ -71,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent)
         background.setBrush(QPalette::Window, QBrush(fitted_image));
         this->setPalette(background);
     } );
-    QAction *actionPVF = new QAction("Person VS Zhouxiang", this);
+    QAction *actionPVF = new QAction("购买", this);
     connect(actionPVF, SIGNAL(triggered()), this, SLOT(changeBack()));
     secondMenu->addAction(actionPVF);
 
@@ -103,12 +104,13 @@ void MainWindow::initPVPGame()
     update();
 }
 void MainWindow::changeBack(){
-    Dialog database;
-    database.openDatabase();
-    database.createTable("users");
+    purchaseMenu * purchase = new purchaseMenu(nullptr,currentUser);
+    purchase->show();
+
 }
 void MainWindow::initPVEGame()
 {
+    qDebug()<<currentUser;
     game_type = BOT;
     game->gameStatus = PLAYING;
     game->startGame(game_type);

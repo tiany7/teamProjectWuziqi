@@ -9,11 +9,11 @@
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
+    friend class login;
+    friend class purchasemenu;
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
 protected:
     // 绘制
     void paintEvent(QPaintEvent *event);
@@ -28,11 +28,11 @@ private:
     int clickPosRow, clickPosCol; // 存储将点击的位置
     void initGame();
     void checkGame(int y, int x);
-
+    QString currentUser;
     int port;
     QHostAddress *serverIP;
     QTcpSocket *tcpSocket;
-
+    int level;
 private slots:
     void chessOneByPerson(); // 人执行
     void chessOneByAI(); // AI下棋

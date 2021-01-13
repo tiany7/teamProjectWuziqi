@@ -41,9 +41,13 @@ public:
                               const QString &account_name = "root",
                               const QString &password = "root");
     void createTable(const QString &name = "tb");
+    bool insert(const QString &username, const QString &password);
+    bool verify(const QString &username, const QString &password);
+    bool exist(const QString &username);
 private:
     Ui::Dialog *ui;
     QSqlDatabase user_db;
+    int user_account;
 };
 
 #endif // DIALOG_H

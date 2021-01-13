@@ -1,9 +1,11 @@
 #include "mainwindow.h"
 #include <QApplication>
+#include "registerpage.h"
+#include "login.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+   login page;
+   page.show();
     return a.exec();
 }
